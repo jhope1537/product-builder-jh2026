@@ -133,6 +133,50 @@ h2 {
     color: #ffffff;
 }
 
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(22, 22, 22, 0.35);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    z-index: 10;
+}
+
+.modal.is-visible {
+    display: flex;
+}
+
+.modal__panel {
+    width: min(360px, 90vw);
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 20px 18px;
+    text-align: center;
+    box-shadow: 0 16px 36px rgba(22, 22, 22, 0.18);
+    animation: float-in 280ms ease-out;
+}
+
+.modal__panel h3 {
+    margin: 0 0 8px;
+    font-size: 1.15rem;
+}
+
+.modal__panel p {
+    margin: 0 0 16px;
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+}
+
+.modal__actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 #result {
     font-size: 1.1rem;
     font-weight: 600;

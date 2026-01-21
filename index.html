@@ -39,6 +39,16 @@
         </div>
     </div>
     <button id="reset" class="control-button control-button--ghost">스코어 리셋</button>
+    <div id="reset-modal" class="modal" aria-hidden="true">
+        <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="reset-title">
+            <h3 id="reset-title">스코어를 초기화할까요?</h3>
+            <p>현재 기록이 모두 0으로 돌아갑니다.</p>
+            <div class="modal__actions">
+                <button id="confirm-reset" class="control-button">초기화</button>
+                <button id="cancel-reset" class="control-button control-button--ghost">취소</button>
+            </div>
+        </div>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>

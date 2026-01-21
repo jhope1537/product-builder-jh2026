@@ -5,6 +5,9 @@ const winScoreDisplay = document.getElementById('score-win');
 const drawScoreDisplay = document.getElementById('score-draw');
 const loseScoreDisplay = document.getElementById('score-lose');
 const resetButton = document.getElementById('reset');
+const resetModal = document.getElementById('reset-modal');
+const confirmResetButton = document.getElementById('confirm-reset');
+const cancelResetButton = document.getElementById('cancel-reset');
 const rockButton = document.getElementById('rock');
 const paperButton = document.getElementById('paper');
 const scissorsButton = document.getElementById('scissors');
@@ -35,6 +38,16 @@ const resetScoreboard = () => {
     updateScoreboard();
     resultDisplay.textContent = '';
     resultDisplay.classList.remove('result--win', 'result--lose', 'result--draw', 'result--pulse');
+};
+
+const openResetModal = () => {
+    resetModal.classList.add('is-visible');
+    resetModal.setAttribute('aria-hidden', 'false');
+};
+
+const closeResetModal = () => {
+    resetModal.classList.remove('is-visible');
+    resetModal.setAttribute('aria-hidden', 'true');
 };
 
 const getComputerChoice = () => {
@@ -74,4 +87,14 @@ const handleChoice = (userChoice) => {
 rockButton.addEventListener('click', () => handleChoice('rock'));
 paperButton.addEventListener('click', () => handleChoice('paper'));
 scissorsButton.addEventListener('click', () => handleChoice('scissors'));
-resetButton.addEventListener('click', resetScoreboard);
+resetButton.addEventListener('click', openResetModal);
+confirmResetButton.addEventListener('click', () => {
+    resetScoreboard();
+    closeResetModal();
+});
+cancelResetButton.addEventListener('click', closeResetModal);
+resetModal.addEventListener('click', (event) => {
+    if (event.target === resetModal) {
+        closeResetModal();
+    }
+});
