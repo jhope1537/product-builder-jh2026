@@ -1,6 +1,9 @@
 const userChoiceDisplay = document.getElementById('user-choice');
 const computerChoiceDisplay = document.getElementById('computer-choice');
 const resultDisplay = document.getElementById('result');
+const winScoreDisplay = document.getElementById('score-win');
+const drawScoreDisplay = document.getElementById('score-draw');
+const loseScoreDisplay = document.getElementById('score-lose');
 const rockButton = document.getElementById('rock');
 const paperButton = document.getElementById('paper');
 const scissorsButton = document.getElementById('scissors');
@@ -10,6 +13,18 @@ const emoji = {
     rock: '✊',
     paper: '✋',
     scissors: '✌️'
+};
+
+const score = {
+    win: 0,
+    draw: 0,
+    lose: 0
+};
+
+const updateScoreboard = () => {
+    winScoreDisplay.textContent = score.win;
+    drawScoreDisplay.textContent = score.draw;
+    loseScoreDisplay.textContent = score.lose;
 };
 
 const getComputerChoice = () => {
@@ -42,6 +57,8 @@ const handleChoice = (userChoice) => {
     resultDisplay.classList.remove('result--pulse');
     void resultDisplay.offsetWidth;
     resultDisplay.classList.add('result--pulse');
+    score[result.status] += 1;
+    updateScoreboard();
 };
 
 rockButton.addEventListener('click', () => handleChoice('rock'));
