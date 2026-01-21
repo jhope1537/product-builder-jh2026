@@ -8,6 +8,7 @@ const resetButton = document.getElementById('reset');
 const resetModal = document.getElementById('reset-modal');
 const confirmResetButton = document.getElementById('confirm-reset');
 const cancelResetButton = document.getElementById('cancel-reset');
+const languageSelect = document.getElementById('language');
 const rockButton = document.getElementById('rock');
 const paperButton = document.getElementById('paper');
 const scissorsButton = document.getElementById('scissors');
@@ -18,6 +19,52 @@ const emoji = {
     paper: '✋',
     scissors: '✌️'
 };
+
+const translations = {
+    ko: {
+        title: '가위바위보',
+        languageLabel: '언어',
+        computer: '컴퓨터',
+        user: '유저',
+        rock: '바위',
+        paper: '보',
+        scissors: '가위',
+        scoreWin: '승',
+        scoreDraw: '무',
+        scoreLose: '패',
+        reset: '스코어 리셋',
+        modalTitle: '스코어를 초기화할까요?',
+        modalBody: '현재 기록이 모두 0으로 돌아갑니다.',
+        confirm: '초기화',
+        cancel: '취소',
+        resultWin: '이겼습니다!',
+        resultLose: '졌습니다!',
+        resultDraw: '비겼습니다!'
+    },
+    en: {
+        title: 'Rock Paper Scissors',
+        languageLabel: 'Language',
+        computer: 'Computer',
+        user: 'You',
+        rock: 'Rock',
+        paper: 'Paper',
+        scissors: 'Scissors',
+        scoreWin: 'Win',
+        scoreDraw: 'Draw',
+        scoreLose: 'Loss',
+        reset: 'Reset Score',
+        modalTitle: 'Reset the score?',
+        modalBody: 'All records will return to zero.',
+        confirm: 'Reset',
+        cancel: 'Cancel',
+        resultWin: 'You win!',
+        resultLose: 'You lose!',
+        resultDraw: "It's a draw!"
+    }
+};
+
+let currentLanguage = 'ko';
+let lastResultStatus = null;
 
 const score = {
     win: 0,
@@ -38,6 +85,7 @@ const resetScoreboard = () => {
     updateScoreboard();
     resultDisplay.textContent = '';
     resultDisplay.classList.remove('result--win', 'result--lose', 'result--draw', 'result--pulse');
+    lastResultStatus = null;
 };
 
 const openResetModal = () => {
@@ -50,6 +98,37 @@ const closeResetModal = () => {
     resetModal.setAttribute('aria-hidden', 'true');
 };
 
+const applyTranslations = () => {
+    const dictionary = translations[currentLanguage];
+    document.querySelectorAll('[data-i18n]').forEach((element) => {
+        const key = element.dataset.i18n;
+        if (dictionary[key]) {
+            element.textContent = dictionary[key];
+        }
+    });
+    if (lastResultStatus) {
+        const keyMap = {
+            win: 'resultWin',
+            lose: 'resultLose',
+            draw: 'resultDraw'
+        };
+        resultDisplay.textContent = dictionary[keyMap[lastResultStatus]];
+    }
+};
+
+const setLanguage = (language) => {
+    currentLanguage = language;
+    localStorage.setItem('language', language);
+    applyTranslations();
+};
+
+const initLanguage = () => {
+    const saved = localStorage.getItem('language');
+    currentLanguage = saved && translations[saved] ? saved : 'ko';
+    languageSelect.value = currentLanguage;
+    applyTranslations();
+};
+
 const getComputerChoice = () => {
     const randomIndex = Math.floor(Math.random() * choices.length);
     return choices[randomIndex];
@@ -57,16 +136,16 @@ const getComputerChoice = () => {
 
 const getResult = (userChoice, computerChoice) => {
     if (userChoice === computerChoice) {
-        return { text: '비겼습니다!', status: 'draw' };
+        return { text: translations[currentLanguage].resultDraw, status: 'draw' };
     }
     if (
         (userChoice === 'rock' && computerChoice === 'scissors') ||
         (userChoice === 'paper' && computerChoice === 'rock') ||
         (userChoice === 'scissors' && computerChoice === 'paper')
     ) {
-        return { text: '이겼습니다!', status: 'win' };
+        return { text: translations[currentLanguage].resultWin, status: 'win' };
     }
-    return { text: '졌습니다!', status: 'lose' };
+    return { text: translations[currentLanguage].resultLose, status: 'lose' };
 };
 
 const handleChoice = (userChoice) => {
@@ -82,6 +161,7 @@ const handleChoice = (userChoice) => {
     resultDisplay.classList.add('result--pulse');
     score[result.status] += 1;
     updateScoreboard();
+    lastResultStatus = result.status;
 };
 
 rockButton.addEventListener('click', () => handleChoice('rock'));
@@ -98,3 +178,5 @@ resetModal.addEventListener('click', (event) => {
         closeResetModal();
     }
 });
+languageSelect.addEventListener('change', (event) => setLanguage(event.target.value));
+initLanguage();

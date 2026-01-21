@@ -72,6 +72,45 @@ h2 {
     animation: float-in 520ms ease-out;
 }
 
+.topbar {
+    width: min(520px, 92vw);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 10px 0 20px;
+}
+
+.topbar h1 {
+    margin: 0;
+}
+
+.lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: #ffffff;
+}
+
+.lang-switch label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+}
+
+.lang-select {
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--ink-strong);
+    cursor: pointer;
+}
+
 .player-section {
     text-align: center;
     width: 100%;
