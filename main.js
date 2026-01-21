@@ -4,6 +4,7 @@ const resultDisplay = document.getElementById('result');
 const winScoreDisplay = document.getElementById('score-win');
 const drawScoreDisplay = document.getElementById('score-draw');
 const loseScoreDisplay = document.getElementById('score-lose');
+const resetButton = document.getElementById('reset');
 const rockButton = document.getElementById('rock');
 const paperButton = document.getElementById('paper');
 const scissorsButton = document.getElementById('scissors');
@@ -25,6 +26,15 @@ const updateScoreboard = () => {
     winScoreDisplay.textContent = score.win;
     drawScoreDisplay.textContent = score.draw;
     loseScoreDisplay.textContent = score.lose;
+};
+
+const resetScoreboard = () => {
+    score.win = 0;
+    score.draw = 0;
+    score.lose = 0;
+    updateScoreboard();
+    resultDisplay.textContent = '';
+    resultDisplay.classList.remove('result--win', 'result--lose', 'result--draw', 'result--pulse');
 };
 
 const getComputerChoice = () => {
@@ -64,3 +74,4 @@ const handleChoice = (userChoice) => {
 rockButton.addEventListener('click', () => handleChoice('rock'));
 paperButton.addEventListener('click', () => handleChoice('paper'));
 scissorsButton.addEventListener('click', () => handleChoice('scissors'));
+resetButton.addEventListener('click', resetScoreboard);

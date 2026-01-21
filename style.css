@@ -121,6 +121,18 @@ h2 {
     transform: translateY(1px);
 }
 
+.control-button--ghost {
+    border-color: var(--line);
+    color: var(--ink-muted);
+    margin-top: 14px;
+    background-color: #ffffff;
+}
+
+.control-button--ghost:hover {
+    background-color: var(--ink-strong);
+    color: #ffffff;
+}
+
 #result {
     font-size: 1.1rem;
     font-weight: 600;
