@@ -9,6 +9,9 @@
     --line: #d7d1c7;
     --accent: #2f6f6b;
     --accent-strong: #1f4f4c;
+    --win: #1f7a61;
+    --lose: #b4463a;
+    --draw: #7a6b2b;
 }
 
 * {
@@ -130,6 +133,28 @@ h2 {
     animation: fade-up 520ms ease-out 120ms both;
 }
 
+.result--win {
+    color: var(--win);
+    border-color: rgba(31, 122, 97, 0.35);
+    box-shadow: 0 10px 20px rgba(31, 122, 97, 0.12);
+}
+
+.result--lose {
+    color: var(--lose);
+    border-color: rgba(180, 70, 58, 0.35);
+    box-shadow: 0 10px 20px rgba(180, 70, 58, 0.12);
+}
+
+.result--draw {
+    color: var(--draw);
+    border-color: rgba(122, 107, 43, 0.35);
+    box-shadow: 0 10px 20px rgba(122, 107, 43, 0.12);
+}
+
+.result--pulse {
+    animation: result-pulse 360ms ease-out;
+}
+
 @media (min-width: 720px) {
     .container {
         flex-direction: row;
@@ -158,5 +183,17 @@ h2 {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes result-pulse {
+    0% {
+        transform: scale(0.98);
+    }
+    60% {
+        transform: scale(1.03);
+    }
+    100% {
+        transform: scale(1);
     }
 }

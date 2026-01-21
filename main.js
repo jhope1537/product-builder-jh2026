@@ -19,24 +19,29 @@ const getComputerChoice = () => {
 
 const getResult = (userChoice, computerChoice) => {
     if (userChoice === computerChoice) {
-        return '비겼습니다!';
+        return { text: '비겼습니다!', status: 'draw' };
     }
     if (
         (userChoice === 'rock' && computerChoice === 'scissors') ||
         (userChoice === 'paper' && computerChoice === 'rock') ||
         (userChoice === 'scissors' && computerChoice === 'paper')
     ) {
-        return '이겼습니다!';
-    } else {
-        return '졌습니다!';
+        return { text: '이겼습니다!', status: 'win' };
     }
+    return { text: '졌습니다!', status: 'lose' };
 };
 
 const handleChoice = (userChoice) => {
     const computerChoice = getComputerChoice();
     userChoiceDisplay.textContent = emoji[userChoice];
     computerChoiceDisplay.textContent = emoji[computerChoice];
-    resultDisplay.textContent = getResult(userChoice, computerChoice);
+    const result = getResult(userChoice, computerChoice);
+    resultDisplay.textContent = result.text;
+    resultDisplay.classList.remove('result--win', 'result--lose', 'result--draw');
+    resultDisplay.classList.add(`result--${result.status}`);
+    resultDisplay.classList.remove('result--pulse');
+    void resultDisplay.offsetWidth;
+    resultDisplay.classList.add('result--pulse');
 };
 
 rockButton.addEventListener('click', () => handleChoice('rock'));
